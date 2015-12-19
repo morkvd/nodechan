@@ -6,14 +6,7 @@ html
     link(rel="stylesheet", href="/css/main.css")
   body
     h1!= h1
-    main
-      each val in threads
-        section.thread
-          header
-            p.postID= 'No.' + val.postID
-            p.title= val.title
-            p.name= val.name
-          section.thumb
-            img(src= 'media/img/' + val.imageString)/
-          section.message
-            p= val.message
+    nav
+      if boards
+        each val in boards
+          a(href= val.url)= '/' + val.url + '/' 

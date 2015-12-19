@@ -9,9 +9,10 @@ var express = require('express'),
 var app = express();
 
 // load routers
-var indexRoutes = require('./routes/index'),
-    threadRoutes = require('./routes/thread')
-    errorRoutes = require('./routes/error');
+var indexRouter = require('./routes/index'),
+    boardRouter = require('./routes/board'),
+    threadRouter = require('./routes/thread'),
+    errorRouter = require('./routes/error');
 
 // Setup de view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -34,9 +35,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Setup routing - files
-app.use('/', indexRoutes);
-app.use('/:threadID', threadRoutes);
-app.use(errorRoutes);
+app.use('/', indexRouter);
+app.use('/:board', boardRouter);
+app.use('/:board/:thread', threadRouter);
+app.use(errorRouter);
 
 // Start de server
 app.listen(3000, function () {
