@@ -1,0 +1,59 @@
+html {box-sizing: border-box;}
+*, *:before, *:after {box-sizing: inherit;}
+
+html {
+  background-color: hsl(0, 0%, 0%);
+  color: hsl(57, 100%, 50%);
+}
+
+.thread {
+  border: 0.1em solid hsl(0, 0%, 43%);
+  background-color: rgb(28, 28, 28);
+  margin: 2em 1em;
+  padding-bottom: 1em;
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start
+  align-items: flex-start
+  align-content: flex-start
+}
+  .thread header {
+    padding: 0.3em 1em;
+    background-color: rgb(53, 53, 53);
+    margin-bottom: 1em;
+    border-bottom: 0.1em solid hsl(0, 0%, 8%);
+
+    flex: 2 1 100%;
+  }
+    .thread .postID,
+    .thread .name,
+    .thread .title {
+      display: inline-block;
+      margin: 0 .6em 0 0;
+    }
+    .thread .title {
+      font-weight: bold;
+    }
+    .thread .name {
+      font-weight: bold;
+      color: hsl(0, 0%, 100%);
+    }
+    .thread .thumb {
+      width: 30%;
+
+      flex: 1 1 30%;
+    }
+    .thread .thumb img {
+      width: 95%;
+      margin-left: 5%;
+    }
+    .thread .message {
+      width: 70%;
+      padding: 0 0 0 1em;
+
+      flex: 1 1 70%;
+    }
+    .thread .message p:first-child {
+      margin-top: 0;
+    }

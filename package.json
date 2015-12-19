@@ -1,0 +1,29 @@
+{
+  "name": "cmdChan",
+  "version": "0.0.1",
+  "description": "A tiny imageboard for CMD amsterdam",
+  "private": false,
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "~4.9.0",
+    "express-myconnection": "^1.0.4",
+    "express-session": "~1.9.3",
+    "jade": "^1.11.0",
+    "mysql": "^2.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "keywords": [
+    "imageboard",
+    "first project",
+    "CMD",
+    "nodejs",
+    "course"
+  ],
+  "author": "Markvdijken@gmail.com",
+  "license": "Unlicense"
+}
