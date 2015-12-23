@@ -10,6 +10,7 @@ var app = express();
 
 // load routers
 var indexRouter = require('./routes/index'),
+    loginRouter = require('./routes/login')
     boardRouter = require('./routes/board'),
     threadRouter = require('./routes/thread'),
     errorRouter = require('./routes/error');
@@ -17,7 +18,7 @@ var indexRouter = require('./routes/index'),
 // Setup de view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+ 
 // Setup serveren van statische bestanden
 app.use(express.static('public'));
 
@@ -30,37 +31,44 @@ app.use(myConnection(mysql, {
     database: 'student'
 }, 'single'));
 
+// Use session
+app.use(session({
+  secret: "HoleInThisPlatinumShipOfFools_NomadicRule_ConceptNoRules_MobileShrineOfThisDestitute_WastelandMute",
+  resave: false,
+  saveUninitialized: true
+}));
+
 // Use the bodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Setup routing - files
 app.use('/', indexRouter);
+app.use('/login', loginRouter);
 app.use('/:board', boardRouter);
 app.use('/:board/:thread', threadRouter);
 app.use(errorRouter);
 
-// Start de server
+// Start de server print sonic
 app.listen(3000, function () {
   console.log('App listening at http://localhost:3000');
 
-
-  console.log('░░░░░░░░░▄▄▄▄▄');
-  console.log('░░░░░░░░▀▀▀██████▄▄▄');
-  console.log('░░░░░░▄▄▄▄▄░░█████████▄                          GOTTA');
-  console.log('░░░░░▀▀▀▀█████▌░▀▐▄░▀▐█                                  GO');
-  console.log('░░░▀▀█████▄▄░▀██████▄██                                     FAST! ');
-  console.log('░░░▀▄▄▄▄▄░░▀▀█▄▀█════█▀');
-  console.log('░░░░░░░░▀▀▀▄░░▀▀███░▀░░░░░░▄▄');
-  console.log('░░░░░▄███▀▀██▄████████▄░▄▀▀▀██▌');
-  console.log('░░░██▀▄▄▄██▀▄███▀░▀▀████░░░░░▀█▄');
-  console.log('▄▀▀▀▄██▄▀▀▌████▒▒▒▒▒▒███░░░░▌▄▄▀');
-  console.log('▌░░░░▐▀████▐███▒▒▒▒▒▐██▌');
-  console.log('▀▄░░▄▀░░░▀▀████▒▒▒▒▄██▀');
-  console.log('░░▀▀░░░░░░▀▀█████████▀');
-  console.log('░░░░░░░░▄▄██▀██████▀█');
-  console.log('░░░░░░▄██▀░░░░░▀▀▀░░█');
-  console.log('░░░░░▄█░░░░░░░░░░░░░▐▌');
-  console.log('░▄▄▄▄█▌░░░░░░░░░░░░░░▀█▄▄▄▄▀▀▄');
-  console.log('▌░░░░░▐░░░░░░░░░░░░░░░░▀▀▄▄▄▀﻿');
+//  console.log('░░░░░░░░░▄▄▄▄▄');
+//  console.log('░░░░░░░░▀▀▀██████▄▄▄');
+//  console.log('░░░░░░▄▄▄▄▄░░█████████▄                          GOTTA');
+//  console.log('░░░░░▀▀▀▀█████▌░▀▐▄░▀▐█                                  GO');
+//  console.log('░░░▀▀█████▄▄░▀██████▄██                                     FAST! ');
+//  console.log('░░░▀▄▄▄▄▄░░▀▀█▄▀█════█▀');
+//  console.log('░░░░░░░░▀▀▀▄░░▀▀███░▀░░░░░░▄▄');
+//  console.log('░░░░░▄███▀▀██▄████████▄░▄▀▀▀██▌');
+//  console.log('░░░██▀▄▄▄██▀▄███▀░▀▀████░░░░░▀█▄');
+//  console.log('▄▀▀▀▄██▄▀▀▌████▒▒▒▒▒▒███░░░░▌▄▄▀');
+//  console.log('▌░░░░▐▀████▐███▒▒▒▒▒▐██▌');
+//  console.log('▀▄░░▄▀░░░▀▀████▒▒▒▒▄██▀');
+//  console.log('░░▀▀░░░░░░▀▀█████████▀');
+//  console.log('░░░░░░░░▄▄██▀██████▀█');
+//  console.log('░░░░░░▄██▀░░░░░▀▀▀░░█');
+//  console.log('░░░░░▄█░░░░░░░░░░░░░▐▌');
+//  console.log('░▄▄▄▄█▌░░░░░░░░░░░░░░▀█▄▄▄▄▀▀▄');
+//  console.log('▌░░░░░▐░░░░░░░░░░░░░░░░▀▀▄▄▄▀﻿');
 });

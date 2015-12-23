@@ -6,7 +6,7 @@ html
     link(rel="stylesheet", href="/css/main.css")
   body
     h1!= h1
-    nav
-      if boards
+    if boards
+      nav
         each val in boards
           a(href= val.url)= '/' + val.url + '/' 

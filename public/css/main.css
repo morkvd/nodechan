@@ -5,6 +5,10 @@ html {
   background-color: hsl(0, 0%, 0%);
   color: hsl(57, 100%, 50%);
 }
+nav a {
+  margin-right: 1em;
+  color: #ffffff;
+}
 
 .thread {
   border: 0.1em solid hsl(0, 0%, 43%);
