@@ -1,0 +1,24 @@
+doctype html
+html
+  include ../includes/head.jade
+  body
+    h1!= h1
+    if boards
+      nav.boards
+        h2 edit boards
+        each val in boards
+          section.board-options
+            a(href= val.url)= '/' + val.url + '/' 
+            a(href= '/admin/delete/' + val.url, class= 'del-link') delete board
+    form(action='addBoard', method='post')
+      h2 add boards
+      fieldset
+        label boardname
+          input(type='text', name='name')
+        label boardurl (relative)
+          input(type='text', name='url')
+        lavel description
+          input(type='text', name='description')
+        input(type='submit', value='add board', name='submit')
+
+

@@ -10,6 +10,13 @@ nav a {
   color: #ffffff;
 }
 
+h1 {
+  margin-left: 0.5em;
+}
+h2 {
+  margin-left: 0.7em;
+}
+
 .thread {
   border: 0.1em solid hsl(0, 0%, 43%);
   background-color: rgb(28, 28, 28);
@@ -61,3 +68,30 @@ nav a {
     .thread .message p:first-child {
       margin-top: 0;
     }
+
+/* login */
+fieldset {
+  background-color: rgb(28, 28, 28);
+  border: 0.1em solid rgb(109, 109, 109);
+  margin: 2em 1em;
+  padding: 1em;
+}
+fieldset input {
+  display: block;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+nav.boards {
+
+}
+.board-options {
+  display: block;
+  background-color: hsl(0, 0%, 11%);
+  border: 0.1em solid hsl(0, 0%, 43%);
+  margin: 1em 1em;
+  padding: 1em;
+}
+.del-link {
+  float: right;
+}
