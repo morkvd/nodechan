@@ -9,14 +9,17 @@ var express = require('express'),
 var app = express();
 
 // load routers
-var indexRoutes = require('./routes/index'),
-    threadRoutes = require('./routes/thread')
-    errorRoutes = require('./routes/error');
+var indexRouter = require('./routes/index'),
+    loginRouter = require('./routes/login')
+    boardRouter = require('./routes/board'),
+    threadRouter = require('./routes/thread'),
+    adminRouter = require('./routes/admin'),
+    errorRouter = require('./routes/error');
 
 // Setup de view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+ 
 // Setup serveren van statische bestanden
 app.use(express.static('public'));
 
@@ -29,36 +32,44 @@ app.use(myConnection(mysql, {
     database: 'student'
 }, 'single'));
 
+// Use session
+app.use(session({
+    secret: "HoleInThisPlatinumShipOfFools_NomadicRule_ConceptNoRules_MobileShrineOfThisDestitute_WastelandMute",
+    resave: false,
+    saveUninitialized: true
+}));
+
 // Use the bodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Setup routing - files
-app.use('/', indexRoutes);
-app.use('/:threadID', threadRoutes);
-app.use(errorRoutes);
+app.use('/', indexRouter);
+app.use('/login', loginRouter);
+app.use('/admin', adminRouter);
+app.use('/:board', boardRouter);
+app.use('/:board/:thread', threadRouter);
+app.use(errorRouter);
 
-// Start de server
+// Start de server print sonic
 app.listen(3000, function () {
-  console.log('App listening at http://localhost:3000');
+    console.log('App listening at http://localhost:3000');
 
-
-  console.log('░░░░░░░░░▄▄▄▄▄');
-  console.log('░░░░░░░░▀▀▀██████▄▄▄');
-  console.log('░░░░░░▄▄▄▄▄░░█████████▄                          GOTTA');
-  console.log('░░░░░▀▀▀▀█████▌░▀▐▄░▀▐█                                  GO');
-  console.log('░░░▀▀█████▄▄░▀██████▄██                                     FAST! ');
-  console.log('░░░▀▄▄▄▄▄░░▀▀█▄▀█════█▀');
-  console.log('░░░░░░░░▀▀▀▄░░▀▀███░▀░░░░░░▄▄');
-  console.log('░░░░░▄███▀▀██▄████████▄░▄▀▀▀██▌');
-  console.log('░░░██▀▄▄▄██▀▄███▀░▀▀████░░░░░▀█▄');
-  console.log('▄▀▀▀▄██▄▀▀▌████▒▒▒▒▒▒███░░░░▌▄▄▀');
-  console.log('▌░░░░▐▀████▐███▒▒▒▒▒▐██▌');
-  console.log('▀▄░░▄▀░░░▀▀████▒▒▒▒▄██▀');
-  console.log('░░▀▀░░░░░░▀▀█████████▀');
-  console.log('░░░░░░░░▄▄██▀██████▀█');
-  console.log('░░░░░░▄██▀░░░░░▀▀▀░░█');
-  console.log('░░░░░▄█░░░░░░░░░░░░░▐▌');
-  console.log('░▄▄▄▄█▌░░░░░░░░░░░░░░▀█▄▄▄▄▀▀▄');
-  console.log('▌░░░░░▐░░░░░░░░░░░░░░░░▀▀▄▄▄▀﻿');
+    console.log('░░░░░░░░░░░░▄▐');
+    console.log('░░░░░░▄▄▄░░▄██▄');
+    console.log('░░░░░▐▀█▀▌░░░░▀█▄');
+    console.log('░░░░░▐█▄█▌░░░░░░▀█▄');
+    console.log('░░░░░░▀▄▀░░░▄▄▄▄▄▀▀');
+    console.log('░░░░▄▄▄██▀▀▀▀');
+    console.log('░░░█▀▄▄▄█░▀▀');
+    console.log('░░░▌░▄▄▄▐▌▀▀▀');
+    console.log('▄░▐░░░▄▄░█░▀▀ U HAVE BEEN SPOOKED BY THE');
+    console.log('▀█▌░░░▄░▀█▀░▀');
+    console.log('░░░░░░░▄▄▐▌▄▄');
+    console.log('░░░░░░░▀███▀█░▄');
+    console.log('░░░░░░▐▌▀▄▀▄▀▐▄SPOOKY SKILENTON');
+    console.log('░░░░░░▐▀░░░░░░▐▌');
+    console.log('░░░░░░█░░░░░░░░█');
+    console.log('░░░░░▐▌░░░░░░░░░█');
+    console.log('░░░░░█░░░░░░░░░░▐▌SEND THIS TO 7 PPL OR SKELINTONS WILL EAT YOU ');
 });

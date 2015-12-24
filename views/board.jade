@@ -1,9 +1,6 @@
 doctype html
 html
-  head
-    meta(charset="UTF-8")/
-    title!= title
-    link(rel="stylesheet", href="/css/main.css")
+  include ./includes/head.jade
   body
     h1!= h1
     main
@@ -14,6 +11,6 @@ html
             p.title= val.title
             p.name= val.name
           section.thumb
-            img(src= 'media/img/' + val.imageString)/
+            img(src= 'media/img/' + val.string)/
           section.message
             p= val.message
