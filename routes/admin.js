@@ -34,7 +34,7 @@ router.post('/addBoard', function (req, res, next) {
 
             connection.query('INSERT INTO `student`.`board` (`ID`, `name`, `description`, `url`) VALUES (NULL, ?, ?, ?);', [req.body.name, req.body.description, req.body.url], function (err, result) {
                 if (err) {
-                    return res.render('error', title: 'wrong', h1: 'ERROR: fill in all fields pls');
+                    return res.render('error', {title: 'wrong', h1: 'ERROR: fill in all fields pls'});
                 }
                 console.log(req.body.url, req.body.name, req.body.description);
                 console.log(result);

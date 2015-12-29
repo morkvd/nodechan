@@ -71,5 +71,5 @@ app.listen(3000, function () {
     console.log('░░░░░░▐▀░░░░░░▐▌');
     console.log('░░░░░░█░░░░░░░░█');
     console.log('░░░░░▐▌░░░░░░░░░█');
-    console.log('░░░░░█░░░░░░░░░░▐▌SEND THIS TO 7 PPL OR SKELINTONS WILL EAT YOU ');
+    console.log('░░░░░█░░░░░░░░░░▐▌');
 });

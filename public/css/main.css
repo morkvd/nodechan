@@ -14,7 +14,7 @@ h1 {
   margin-left: 0.5em;
 }
 h2 {
-  margin-left: 0.7em;
+  margin: 0;
 }
 
 .thread {
@@ -70,16 +70,25 @@ h2 {
     }
 
 /* login */
-fieldset {
+form {
   background-color: rgb(28, 28, 28);
   border: 0.1em solid rgb(109, 109, 109);
   margin: 2em 1em;
   padding: 1em;
 }
-fieldset input {
+form fieldset {
+  margin: 1em 0 0 0;
+  border: 0.1em solid rgb(85, 85, 85);
+  background-color: rgb(68, 68, 68);
+}
+fieldset input, form textarea {
   display: block;
   margin-top: 0.5em;
   margin-bottom: 1em;
+}
+input[type='file'] {
+  border: 0.1em solid rgb(84, 84, 84);
+  padding: 1em;
 }
 
 nav.boards {

@@ -4,6 +4,19 @@ html
   body
     h1!= h1
     main
+      section.createthread
+        form(action= req.baseUrl + '/start', method='post', enctype='multipart/form-data' )
+          h2 new thread
+          fieldset
+            label name
+              input(type= 'text', name= 'name')
+            label title
+              input(type= 'text', name= 'title')
+            label message 
+              textarea(name= 'message')
+            label image
+              input(type= 'file', accept= 'image/*', name= 'img')
+            input(type= 'submit', name= 'submit', value= 'create thread')
       each val in threads
         section.thread
           header

@@ -15,14 +15,7 @@ router.get('/', function (req, res, next) {
                 return next(err);
             }
             console.log(result);
-            res.render(
-                'index', 
-                {
-                    title: 'homepage', 
-                    h1: 'welcome to cmd-chan', 
-                    boards: req.boards
-                }
-            );
+            res.render('index', {title: 'homepage', h1: 'welcome to cmd-chan', boards: req.boards });
         });
     });
 });
