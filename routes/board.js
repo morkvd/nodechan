@@ -1,10 +1,9 @@
-var express = require('express');
-var fs = require('fs');
-var multer = require('multer');
+var express = require('express'),
+    fs = require('fs'),
+    multer = require('multer');
 
-
-var router = express.Router();
-var upload = multer({dest: './public/media/img' })
+var router = express.Router(),
+    upload = multer({dest: './public/media/img' });
 
 router.get('/', function (req, res, next) {
     res.locals.req = req;
@@ -26,13 +25,46 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/start', upload.single('img'), function (req, res, next) {
+    function errorCheck(err) {
+        if (err) {
+            return next(err);
+        }  
+    }
+
     console.log('post route works')
     console.dir(req.file);
-    console.log(req.file.destination);
-    fs.rename(req.file.path, './public/media/img/' + (req.file.originalname.replace(/\s+/g, '_')), function () {
+    fs.rename(req.file.path, './public/media/img/' + (req.file.originalname.replace(/\s+/g, '_')), function (err) {
+        req.getConnection(function (err, connection) {
+            errorCheck(err);
+
+            connection.query('INSERT INTO `student`.`image` (`ID`, `string`) VALUES (NULL, ?);', [req.file.originalname.replace(/\s+/g, '_')], function (err, result) {
+                errorCheck(err);
+                res.locals.imageId = result.insertId; // store the ID of the image for later use as FK
+                res.locals.boardUrl = req.baseUrl.slice(1); // store the name of the current board
+
+                connection.query('INSERT INTO `student`.`thread` (`ID`, `boardID`, `postID`, `title`) VALUES (NULL, (SELECT ID FROM `student`.`board` WHERE url = ?), NULL, ?);', [res.locals.boardUrl, req.body.title], function (err, result) {
+                    errorCheck(err);
+                    res.locals.threadId = result.insertId;
+
+                    connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`) VALUES (NULL, ?, ?, ?, ?)', [res.locals.threadId, req.body.name, req.body.message, res.locals.imageId], function (err, result) {
+                        errorCheck(err);
+                        res.locals.OpId = result.insertId;
+
+                        console.log(result);
+
+                        connection.query('UPDATE `student`.`thread` SET `postID` = ? WHERE `thread`.`id` = ?', [res.locals.OpId, res.locals.threadId], function (err, result) {
+                           errorCheck(err);
+                           console.log(result);
+
+                           res.redirect(req.baseUrl);
+                        });
+                    });
+                });
+            });
+        });
+
         console.log("file recieved and renamed");
     });
-    res.redirect(req.baseUrl);
 });
 
 module.exports = router;
