@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
         errorCheck(err, next);
 
         // run query
-        connection.query('SELECT board.ID AS boardID, board.name AS boardName, board.description AS boardDescription, board.url AS boardUrl, post.ID AS postID, post.name AS postName, post.message AS postMessage, image.string AS imageString FROM student.thread LEFT JOIN board ON thread.boardID = board.ID LEFT JOIN post ON thread.postID = post.ID LEFT JOIN image ON post.imgID = image.ID WHERE board.url = ?', [req.baseUrl.substr(1)], function (err, result) {
+        connection.query('SELECT board.ID AS boardID, board.name AS boardName, board.description AS boardDescription, board.url AS boardUrl, post.ID AS postID, post.name AS postName, post.message AS postMessage, thread.title AS threadTitle, image.string AS imageString FROM student.thread LEFT JOIN board ON thread.boardID = board.ID LEFT JOIN post ON thread.postID = post.ID LEFT JOIN image ON post.imgID = image.ID WHERE board.url = ?', [req.baseUrl.substr(1)], function (err, result) {
             errorCheck(err, next);
 
             //console.log(result, req.baseUrl.substr(1));
