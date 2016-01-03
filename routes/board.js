@@ -8,11 +8,18 @@ var router = express.Router(),
 router.get('/', function (req, res, next) {
     res.locals.req = req;
 
-    req.getConnection(function (err, connection) {
-    // catch errors
+    function errorCheck(err) {
         if (err) {
             return next(err);
-        }
+        }  
+    }
+
+    req.getConnection(function (err, connection) {
+        // catch errors
+        errorCheck(err)
+
+
+        
         // run query
         connection.query('SELECT * FROM thread LEFT JOIN board ON thread.boardID = board.ID LEFT JOIN post ON thread.postID = post.ID LEFT JOIN image ON post.imgID = image.ID WHERE board.url = ?;', [req.baseUrl.substr(1)], function (err, result) {
             if (err) {
@@ -46,13 +53,13 @@ router.post('/start', upload.single('img'), function (req, res, next) {
                     errorCheck(err);
                     res.locals.threadId = result.insertId;
 
-                    connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`) VALUES (NULL, ?, ?, ?, ?)', [res.locals.threadId, req.body.name, req.body.message, res.locals.imageId], function (err, result) {
+                    connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`) VALUES (NULL, ?, ?, ?, ?)', [ res.locals.threadId, req.body.name, req.body.message, res.locals.imageId ], function (err, result) {
                         errorCheck(err);
                         res.locals.OpId = result.insertId;
 
                         console.log(result);
 
-                        connection.query('UPDATE `student`.`thread` SET `postID` = ? WHERE `thread`.`id` = ?', [res.locals.OpId, res.locals.threadId], function (err, result) {
+                        connection.query('UPDATE `student`.`thread` SET `postID` = ? WHERE `thread`.`id` = ?', [ res.locals.OpId, res.locals.threadId ], function (err, result) {
                            errorCheck(err);
                            console.log(result);
 

@@ -5,6 +5,19 @@ html {
   background-color: hsl(0, 0%, 0%);
   color: hsl(57, 100%, 50%);
 }
+
+nav {
+  padding: 0.5em 1em;
+  background-color: #111;
+  text-align: center;
+  margin: 1em;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none; 
+}
+
 nav a {
   margin-right: 1em;
   color: #ffffff;
@@ -18,7 +31,7 @@ h2 {
 }
 
 .thread {
-  border: 0.1em solid hsl(0, 0%, 43%);
+  border: 0.1em solid rgb(53, 53, 53);
   background-color: rgb(28, 28, 28);
   margin: 2em 1em;
   padding-bottom: 1em;
@@ -57,7 +70,7 @@ h2 {
     }
     .thread .thumb img {
       width: 95%;
-      margin-left: 5%;
+      margin-left: 1em;
     }
     .thread .message {
       width: 70%;
@@ -68,6 +81,17 @@ h2 {
     .thread .message p:first-child {
       margin-top: 0;
     }
+
+.thread .post {
+  margin: 1em;
+  width: 100%;
+  background-color: rgb(51, 51, 51);
+  border: 0.1em solid rgb(85, 85, 85);
+}
+  .thread .post header {
+    background-color: rgb(85, 85, 85);
+    border-bottom: 0.1em solid rgb(34, 34, 34);
+  }
 
 /* login */
 form {

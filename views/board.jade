@@ -19,12 +19,15 @@ html
             input(type= 'submit', name= 'submit', value= 'create thread')
 
       each val in threads
-        section.thread
-          header
-            p.postID= 'No.' + val.postID
-            p.title= val.title
-            p.name= val.name
-          section.thumb
-            img(src= 'media/img/' + val.string)/
-          section.message
-            p= val.message
+        a(href= req.baseUrl + '/' + val.postID)
+          section.thread
+            header
+              p.postID= 'No.' + val.postID
+              p.title= val.title
+              p.name= val.name
+            section.thumb
+              img(src= 'media/img/' + val.string)/
+            section.message
+              - val.message = val.message.split(/\r?\n/)
+              each line in val.message
+                p= line

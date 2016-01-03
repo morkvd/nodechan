@@ -3,29 +3,28 @@ html
   include ./includes/head.jade
   body
     section.thread
-      section.op 
-        h1.title!= title
-        p.name test thread
-        p.postId nr.10
-        section.mesage
-          p whatsup serversiders welcome to the general node.js thread for all tips tricks and hints
-          p check the wiki for tutorials and other shit
-        
-      section.post
-        p.name sage
-        p.postId nr.11
-        section.message 
-          p node a shit
 
-      section.post 
-        p.name anon
-        p.postId nr.12
-        section.message 
-          p &gt;implying javascript is a serious language
-          p &gt;implying OP isn't a fag
-
-      section.post
-        p.name douglas crockford
-        p.postId nr.13
-        section.message
-          p 13 GET
+      header
+        p.postID= 'No.' + OP.ID
+        p.title= OP.title
+        p.name= OP.name
+      section.thumb
+        img(src= '/media/img/' + OP.string)/
+      section.message
+        - OP.message = OP.message.split(/\r?\n/)
+        each line in OP.message
+          p= line
+      
+      if posts
+        each val in posts
+          section.post
+            header
+              p.postID= 'No.' + val.ID
+              p.name= val.name
+            if val.string
+              section.thumb
+                img(src= '/media/img/' + val.string)/
+            section.message
+              - val.message = val.message.split(/\r?\n/)
+              each line in val.message
+                p= line
