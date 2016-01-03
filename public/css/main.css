@@ -30,6 +30,10 @@ h2 {
   margin: 0;
 }
 
+.green {
+  color: #0F0;
+}
+
 .thread {
   border: 0.1em solid rgb(53, 53, 53);
   background-color: rgb(28, 28, 28);
@@ -107,6 +111,7 @@ h2 {
     width: 70%;
     padding: 0 0 0 1em;
     flex: 1 1 70%;
+    color: #fff;
   }
 
 /* login */
