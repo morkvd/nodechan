@@ -23,11 +23,14 @@ html
           section.thread
             header
               p.postID= 'No.' + val.postID
-              p.title= val.title
-              p.name= val.name
+              p.title= val.postTitle
+              p.name= val.postName
             section.thumb
-              img(src= 'media/img/' + val.string)/
+              img(src= 'media/img/' + val.imageString)/
             section.message
-              - val.message = val.message.split(/\r?\n/)
-              each line in val.message
-                p= line
+              - val.postMessage = val.postMessage.split(/\r?\n/)
+              each line in val.postMessage
+                if (line.substr(0, 1) === '>')
+                  p.green= line
+                else
+                  p= line

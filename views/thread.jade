@@ -2,29 +2,48 @@ doctype html
 html
   include ./includes/head.jade
   body
-    section.thread
+    main
 
-      header
-        p.postID= 'No.' + OP.ID
-        p.title= OP.title
-        p.name= OP.name
-      section.thumb
-        img(src= '/media/img/' + OP.string)/
-      section.message
-        - OP.message = OP.message.split(/\r?\n/)
-        each line in OP.message
-          p= line
-      
-      if posts
-        each val in posts
-          section.post
-            header
-              p.postID= 'No.' + val.ID
-              p.name= val.name
-            if val.string
-              section.thumb
-                img(src= '/media/img/' + val.string)/
-            section.message
-              - val.message = val.message.split(/\r?\n/)
-              each line in val.message
-                p= line
+      section.createpost
+        form(action= req.baseUrl + '/post', method='post', enctype='multipart/form-data' )
+          h2 reply to this thread
+          fieldset
+            label name
+              input(type= 'text', name= 'name')
+            label message 
+              textarea(name= 'message')
+            label image
+              input(type= 'file', accept= 'image/*', name= 'img')
+            input(type= 'submit', name= 'submit', value= 'reply')
+    
+      section.thread
+        header
+          p.postID= 'No.' + OP.postID
+          p.title= OP.threadTitle
+          p.name= OP.postName
+        section.thumb
+          img(src= '/media/img/' + OP.imageString)/
+        section.message
+          - OP.postMessage = OP.postMessage.split(/\r?\n/)
+          each line in OP.postMessage
+            if (line[0] === '>')
+              p.green= line
+            else
+              p= line
+        
+        if posts
+          each val in posts
+            section.post
+              header
+                p.postID= 'No.' + val.postID
+                p.name= val.postName
+              if val.imageString
+                section.thumb
+                  img(src= '/media/img/' + val.imageString)/
+              section.message
+                - val.postMessage = val.postMessage.split(/\r?\n/)
+                each line in val.postMessage
+                  if (line.substr(0, 1) === '>')
+                    p.green= line
+                  else
+                    p= line
