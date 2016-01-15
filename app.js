@@ -10,7 +10,7 @@ var app = express();
 
 // load routers
 var indexRouter = require('./routes/index'),
-    loginRouter = require('./routes/login')
+    loginRouter = require('./routes/login'),
     boardRouter = require('./routes/board'),
     threadRouter = require('./routes/thread'),
     adminRouter = require('./routes/admin'),

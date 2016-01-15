@@ -56,7 +56,8 @@ h2 {
   }
     .postID,
     .name,
-    .title {
+    .title,
+    .timestamp {
       display: inline-block;
       margin: 0 .6em 0 0;
       color: hsl(57, 100%, 50%);
@@ -111,6 +112,9 @@ h2 {
     width: 70%;
     padding: 0 0 0 1em;
     flex: 1 1 70%;
+    color: #fff;
+  }
+  .message p {
     color: #fff;
   }
 

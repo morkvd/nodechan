@@ -3,6 +3,7 @@ a tiny imageboard for the server-side scripting course @ CMD Amsterdam
 (my first node project)
 
 ##TODO
+- check if fields are filled
 - resize images
 - unique imagenames to combat overwriting
 - add metadata to images (size dimensions extension)

@@ -25,10 +25,13 @@ html
               p.postID= 'No.' + val.postID
               p.title= val.threadTitle
               p.name= val.postName
+              p.timestamp= val.timestamp
             section.thumb
               img(src= 'media/img/' + val.imageString)/
             section.message
+              //- split the comment into array of multiple lines (\r\n is newline)
               - val.postMessage = val.postMessage.split(/\r?\n/)
+              //- for each line check if the line begins with ">" and apply the class green to the line if this is true 
               each line in val.postMessage
                 if (line.substr(0, 1) === '>')
                   p.green= line

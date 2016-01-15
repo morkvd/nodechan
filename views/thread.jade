@@ -21,6 +21,7 @@ html
           p.postID= 'No.' + OP.postID
           p.title= OP.threadTitle
           p.name= OP.postName
+          p.timestamp= OP.timestamp
         section.thumb
           img(src= '/media/img/' + OP.imageString)/
         section.message
@@ -37,6 +38,7 @@ html
               header
                 p.postID= 'No.' + val.postID
                 p.name= val.postName
+                p.timestamp= val.timestamp
               if val.imageString
                 section.thumb
                   img(src= '/media/img/' + val.imageString)/

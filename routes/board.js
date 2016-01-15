@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
         errorCheck(err, next);
 
         // run query
-        connection.query('SELECT board.ID AS boardID, board.name AS boardName, board.description AS boardDescription, board.url AS boardUrl, post.ID AS postID, post.name AS postName, post.message AS postMessage, thread.title AS threadTitle, image.string AS imageString FROM student.thread LEFT JOIN board ON thread.boardID = board.ID LEFT JOIN post ON thread.postID = post.ID LEFT JOIN image ON post.imgID = image.ID WHERE board.url = ?', [req.baseUrl.substr(1)], function (err, result) {
+        connection.query('SELECT board.ID AS boardID, board.name AS boardName, board.description AS boardDescription, board.url AS boardUrl, post.ID AS postID, post.name AS postName, post.message AS postMessage, post.timestamp AS timestamp, thread.title AS threadTitle, image.string AS imageString FROM student.thread LEFT JOIN board ON thread.boardID = board.ID LEFT JOIN post ON thread.postID = post.ID LEFT JOIN image ON post.imgID = image.ID WHERE board.url = ?', [req.baseUrl.substr(1)], function (err, result) {
             errorCheck(err, next);
 
             //console.log(result, req.baseUrl.substr(1));
@@ -49,7 +49,7 @@ router.post('/start', upload.single('img'), function (req, res, next) {
                     errorCheck(err, next);
                     res.locals.threadId = result.insertId;
 
-                    connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`) VALUES (NULL, ?, ?, ?, ?)', [ res.locals.threadId, req.body.name, req.body.message, res.locals.imageId ], function (err, result) {
+                    connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`, `timestamp`) VALUES (NULL, ?, ?, ?, ?, NULL)', [ res.locals.threadId, req.body.name, req.body.message, res.locals.imageId ], function (err, result) {
                         errorCheck(err, next);
                         res.locals.OpId = result.insertId;
 
