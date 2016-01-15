@@ -19,7 +19,7 @@ var indexRouter = require('./routes/index'),
 // Setup de view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
- 
+
 // Setup serveren van statische bestanden
 app.use(express.static('public'));
 
@@ -61,13 +61,13 @@ app.listen(3000, function () {
     console.log('░░░░░▐█▄█▌░░░░░░▀█▄░');
     console.log('░░░░░░▀▄▀░░░▄▄▄▄▄▀▀░');
     console.log('░░░░▄▄▄██▀▀▀▀░░░░░░░ U HAVE BEEN SPOOKED BY THE');
-    console.log('░░░█▀▄▄▄█░▀▀░░░░░░░░  SPOOKY SKILENTON');
+    console.log('░░░█▀▄▄▄█░▀▀░░░░░░░░  SPOOKY SKELENTON');
     console.log('░░░▌░▄▄▄▐▌▀▀▀░░░░░░░');
     console.log('▄░▐░░░▄▄░█░▀▀░░░░░░░ GOOD BONES AND CALCIUM');
     console.log('▀█▌░░░▄░▀█▀░▀░░░░░░░  WILL COME TO YOU');
     console.log('░░░░░░░▄▄▐▌▄▄░░░░░░░');
-    console.log('░░░░░░░▀███▀█░▄░░░░░ BUT ONLY IF YOU INCLUDE');
-    console.log('░░░░░░▐▌▀▄▀▄▀▐▄░░░░░  THIS IMAGE IN YOUR NEXT PROJECT');
+    console.log('░░░░░░░▀███▀█░▄░░░░░ BUT ONLY IF YOU WRITE');
+    console.log('░░░░░░▐▌▀▄▀▄▀▐▄░░░░░  QUALITY CODE');
     console.log('░░░░░░▐▀░░░░░░▐▌░░░░');
     console.log('░░░░░░█░░░░░░░░█░░░░');
     console.log('░░░░░▐▌░░░░░░░░░█░░░');

@@ -1,6 +1,7 @@
 # nodechan
 a tiny imageboard for the server-side scripting course @ CMD Amsterdam
-(my first node project)
+(my first node project).
+Look at databaseSetup.sql for how the database is setup. 
 
 ##TODO
 - check if fields are filled
