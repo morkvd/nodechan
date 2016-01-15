@@ -4,6 +4,7 @@ a tiny imageboard for the server-side scripting course @ CMD Amsterdam
 Look at databaseSetup.sql for how the database is setup. 
 
 ##TODO
+- fix /:board/ not working (extra slash at the end)
 - check if fields are filled
 - resize images
 - unique imagenames to combat overwriting

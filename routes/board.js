@@ -7,14 +7,17 @@ var router = express.Router(),
     upload = multer({dest: './public/media/img'});
 
 router.get('/', function (req, res, next) {
-    res.locals.req = req;
+    console.log(req.baseUrl);
+    res.locals.baseUrl = req.baseUrl;
+    res.locals.urlParts = req.baseUrl.split('/');
+    res.locals.currentBoard = res.locals.urlParts[1];
 
     req.getConnection(function (err, connection) {
         // catch errors
         utils.errorCheck(err, next);
 
         // run query
-        connection.query('SELECT board.ID AS boardID, board.name AS boardName, board.description AS boardDescription, board.url AS boardUrl, post.ID AS postID, post.name AS postName, post.message AS postMessage, post.timestamp AS timestamp, thread.title AS threadTitle, image.string AS imageString FROM student.thread LEFT JOIN board ON thread.boardID = board.ID LEFT JOIN post ON thread.postID = post.ID LEFT JOIN image ON post.imgID = image.ID WHERE board.url = ?', [req.baseUrl.substr(1)], function (err, result) {
+        connection.query('SELECT board.ID AS boardID, board.name AS boardName, board.description AS boardDescription, board.url AS boardUrl, post.ID AS postID, post.name AS postName, post.message AS postMessage, post.timestamp AS timestamp, thread.title AS threadTitle, image.string AS imageString FROM student.thread LEFT JOIN board ON thread.boardID = board.ID LEFT JOIN post ON thread.postID = post.ID LEFT JOIN image ON post.imgID = image.ID WHERE board.url = ?', [res.locals.currentBoard], function (err, result) {
             utils.errorCheck(err, next);
 
             //console.log(result, req.baseUrl.substr(1));
@@ -32,9 +35,8 @@ router.post('/start', upload.single('img'), function (req, res, next) {
                 utils.errorCheck(err, next);
 
                 res.locals.imageId = result.insertId; // store the ID of the image for later use as FK
-                res.locals.boardUrl = req.baseUrl.slice(1); // store the name of the current board
 
-                connection.query('INSERT INTO `student`.`thread` (`ID`, `boardID`, `postID`, `title`) VALUES (NULL, (SELECT ID FROM `student`.`board` WHERE url = ?), NULL, ?);', [res.locals.boardUrl, req.body.title], function (err, result) {
+                connection.query('INSERT INTO `student`.`thread` (`ID`, `boardID`, `postID`, `title`) VALUES (NULL, (SELECT ID FROM `student`.`board` WHERE url = ?), NULL, ?);', [res.locals.currentBoard, req.body.title], function (err, result) {
                     utils.errorCheck(err, next);
                     res.locals.threadId = result.insertId;
 

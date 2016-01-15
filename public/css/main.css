@@ -30,10 +30,6 @@ h2 {
   margin: 0;
 }
 
-.green {
-  color: #0F0;
-}
-
 .thread {
   border: 0.1em solid rgb(53, 53, 53);
   background-color: rgb(28, 28, 28);
@@ -116,6 +112,9 @@ h2 {
   }
   .message p {
     color: #fff;
+  }
+  .message p.green {
+    color: #0F0;
   }
 
 /* login */
