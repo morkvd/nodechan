@@ -38,7 +38,7 @@ router.post('/addBoard', function (req, res, next) {
                 }
                 console.log(req.body.url, req.body.name, req.body.description);
                 console.log(result);
-                res.redirect('../');
+                res.redirect('../../admin/'); // <- note to future smarter me: why does admin needs a slash at the end && how do you fix this properly
             });
         });
     } else {
@@ -62,7 +62,7 @@ router.get('/delete/:board', function (req, res, next) {
                 }
                 console.log(result);
                 console.log('deleted board');
-                res.redirect('../');
+                res.redirect('../../admin/'); // <- note to future smarter me: why does admin needs a slash at the end && how do you fix this properly
             });
         });
     } else {
