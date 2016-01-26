@@ -39,7 +39,7 @@ router.post('/post', upload.single('img'), function (req, res, next) {
 
     req.getConnection(function (err, connection) {
         utils.errorCheck(err, next);
-        if (!(req.body.name && req.body.message)) {
+        if (!req.body.message) {
             res.render('error',  {title: 'doesn\'t work', h1: 'you have to fill in all fields'});
         } else if (req.file) {
             console.log("post with file");
@@ -50,14 +50,14 @@ router.post('/post', upload.single('img'), function (req, res, next) {
                     utils.errorCheck(err, next);
                     res.locals.imageId = result.insertId; // store the ID of the image for later use as FK
                    
-                    connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`, `timestamp`) VALUES (NULL, ?, ?, ?, ?, NULL)', [res.locals.currentOP, req.body.name, req.body.message, res.locals.imageId], function (err, result) {
+                    connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`, `timestamp`) VALUES (NULL, ?, ?, ?, ?, NULL)', [res.locals.currentOP, req.body.name ? req.body.name : 'anonymous', req.body.message, res.locals.imageId], function (err, result) {
                         utils.errorCheck(err, next);
                         res.redirect(req.baseUrl);
                     });  
                 });
             });
         } else {
-            connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`, `timestamp`) VALUES (NULL, ?, ?, ?, NULL, NULL)', [res.locals.currentOP, req.body.name, req.body.message], function (err, result) {
+            connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`, `timestamp`) VALUES (NULL, ?, ?, ?, NULL, NULL)', [res.locals.currentOP, req.body.name ? req.body.name : 'anonymous', req.body.message], function (err, result) {
                 utils.errorCheck(err, next);
                 res.redirect(req.baseUrl);
             });

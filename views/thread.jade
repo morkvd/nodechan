@@ -26,6 +26,7 @@ html
           p.name= OP.postName
           p.timestamp= OP.timestamp
         section.thumb
+          // a(href= '/media/img/' + OP.imageString, target= '_blank')
           img(src= '/media/img/' + OP.imageString)/
         section.message
           - OP.postMessage = OP.postMessage.split(/\r?\n/)
@@ -44,6 +45,7 @@ html
                 p.timestamp= val.timestamp
               if val.imageString
                 section.thumb
+                  // a(href= '/media/img/' + val.imageString, target= '_blank')
                   img(src= '/media/img/' + val.imageString)/
               section.message
                 - val.postMessage = val.postMessage.split(/\r?\n/)

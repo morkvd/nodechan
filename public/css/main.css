@@ -83,10 +83,32 @@ p {
       width: 30%;
       margin-bottom: 0.8em;
       flex: 1 1 30%;
+      position: relative;
+      cursor: pointer;
+    }
+    .thread .thumb:after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      content: '+';
+      font-size: 1.6em;
+      font-family: monospace;
+      font-weight: bold;
+    }
+    .thread .thumb.wide {
+      flex: 1 1 100%;
+    }
+    .thread .thumb.wide:after {
+      content: '-';
+      padding-right: 1em;
     }
     .thread .thumb img {
       width: 95%;
       margin-left: 1em;
+    }
+    .thread .thumb.wide img {
+      width: 100%;
+      margin-left: 0;
     }
     .thread .message {
       width: 70%;
@@ -118,6 +140,23 @@ p {
     width: 30%;
     flex: 1 1 30%;
     margin-bottom: 1em;
+    cursor: pointer;
+  }
+  .post .thumb:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    content: '+';
+    font-size: 1.6em;
+    font-family: monospace;
+    font-weight: bold;
+  }
+  .post .thumb.wide {
+    flex: 1 1 100%;
+  }
+  .post .thumb.wide:after {
+    content: '-';
+    padding-right: 0.5em;
   }
   .post .message {
     width: 70%;

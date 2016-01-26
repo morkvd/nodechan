@@ -3,7 +3,7 @@ html
   include ./includes/head.jade
   body
     main
-      h1!= h1
+      h1!= boardName + ": " + boardDescription
 
       section.back
         a(href= '../') &lt; back 
@@ -22,22 +22,23 @@ html
               input(type= 'file', accept= 'image/*', name= 'img')
             input(type= 'submit', name= 'submit', value= 'create thread')
 
-      each val in threads
-        a(href= baseUrl + '/' + val.postID)
-          section.thread
-            header
-              p.postID= 'No.' + val.postID
-              p.title= val.threadTitle
-              p.name= val.postName
-              p.timestamp= val.timestamp
-            section.thumb
-              img(src= '/media/img/' + val.imageString)/
-            section.message
-              //- split the comment into array of multiple lines (\r\n is newline)
-              - val.postMessage = val.postMessage.split(/\r?\n/)
-              //- for each line check if the line begins with ">" and apply the class green to the line if this is true 
-              each line in val.postMessage
-                if (line.substr(0, 1) === '>')
-                  p.green= line
-                else
-                  p= line
+      if threads
+        each val in threads
+          a(href= baseUrl + '/' + val.postID)
+            section.thread
+              header
+                p.postID= 'No.' + val.postID
+                p.title= val.threadTitle
+                p.name= val.postName
+                p.timestamp= val.timestamp
+              section.thumb
+                img(src= '/media/img/' + val.imageString)/
+              section.message
+                //- split the comment into array of multiple lines (\r\n is newline)
+                - val.postMessage = val.postMessage.split(/\r?\n/)
+                //- for each line check if the line begins with ">" and apply the class green to the line if this is true 
+                each line in val.postMessage
+                  if (line.substr(0, 1) === '>')
+                    p.green= line
+                  else
+                    p= line

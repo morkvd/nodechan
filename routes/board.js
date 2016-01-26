@@ -17,12 +17,16 @@ router.get('/', function (req, res, next) {
         utils.errorCheck(err, next);
 
         connection.query('SELECT * FROM board WHERE url = ?', [res.locals.currentBoard], function (err, result) {
+            res.locals.boardName = result[0].name;
+            res.locals.boardDescription = result[0].description;
+
+            console.log(result);
             utils.errorCheck(err, next);
             if (!result.length == 0) {
                 connection.query('SELECT board.ID AS boardID, board.name AS boardName, board.description AS boardDescription, board.url AS boardUrl, post.ID AS postID, post.name AS postName, post.message AS postMessage, post.timestamp AS timestamp, thread.title AS threadTitle, image.string AS imageString FROM student.thread LEFT JOIN board ON thread.boardID = board.ID LEFT JOIN post ON thread.postID = post.ID LEFT JOIN image ON post.imgID = image.ID WHERE board.url = ?', [res.locals.currentBoard], function (err, result) {
-                    
                     utils.errorCheck(err, next);
-                    res.render('board', {title: 'homepage', h1: result[0].boardName + ": " + result[0].boardDescription, threads: result});
+                    console.log(result[0]);
+                    res.render('board', {threads: result}); // result[0].boardName + 
                 });
             } else {
                 res.render('error',  {title: '404 doesnt exist', h1: 'the board doesn\'t exist ya dingus'});
@@ -51,7 +55,7 @@ router.post('/start', upload.single('img'), function (req, res, next) {
                         res.locals.threadId = result.insertId;
                         console.log(res.locals.threadId, result);
 
-                        connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`, `timestamp`) VALUES (NULL, ?, ?, ?, ?, NULL)', [res.locals.threadId, req.body.name, req.body.message, res.locals.imageId], function (err, result) {
+                        connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`, `timestamp`) VALUES (NULL, ?, ?, ?, ?, NULL)', [res.locals.threadId, req.body.name ? req.body.name : 'anonymous' , req.body.message, res.locals.imageId], function (err, result) {
                             utils.errorCheck(err, next);
                             res.locals.OpId = result.insertId;
 
