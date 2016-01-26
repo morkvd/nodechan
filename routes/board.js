@@ -6,8 +6,8 @@ var express = require('express'),
 var router = express.Router(),
     upload = multer({dest: './public/media/img'});
 
+
 router.get('/', function (req, res, next) {
-    console.log(req.baseUrl);
     res.locals.baseUrl = req.baseUrl;
     res.locals.urlParts = req.baseUrl.split('/');
     res.locals.currentBoard = res.locals.urlParts[1];
@@ -16,46 +16,58 @@ router.get('/', function (req, res, next) {
         // catch errors
         utils.errorCheck(err, next);
 
-        // run query
-        connection.query('SELECT board.ID AS boardID, board.name AS boardName, board.description AS boardDescription, board.url AS boardUrl, post.ID AS postID, post.name AS postName, post.message AS postMessage, post.timestamp AS timestamp, thread.title AS threadTitle, image.string AS imageString FROM student.thread LEFT JOIN board ON thread.boardID = board.ID LEFT JOIN post ON thread.postID = post.ID LEFT JOIN image ON post.imgID = image.ID WHERE board.url = ?', [res.locals.currentBoard], function (err, result) {
+        connection.query('SELECT * FROM board WHERE url = ?', [res.locals.currentBoard], function (err, result) {
             utils.errorCheck(err, next);
-
-            //console.log(result, req.baseUrl.substr(1));
-            res.render('board', {title: 'homepage', h1: 'welcome to cmd-chan', threads: result});
-        });
+            if (!result.length == 0) {
+                connection.query('SELECT board.ID AS boardID, board.name AS boardName, board.description AS boardDescription, board.url AS boardUrl, post.ID AS postID, post.name AS postName, post.message AS postMessage, post.timestamp AS timestamp, thread.title AS threadTitle, image.string AS imageString FROM student.thread LEFT JOIN board ON thread.boardID = board.ID LEFT JOIN post ON thread.postID = post.ID LEFT JOIN image ON post.imgID = image.ID WHERE board.url = ?', [res.locals.currentBoard], function (err, result) {
+                    
+                    utils.errorCheck(err, next);
+                    res.render('board', {title: 'homepage', h1: result[0].boardName + ": " + result[0].boardDescription, threads: result});
+                });
+            } else {
+                res.render('error',  {title: '404 doesnt exist', h1: 'the board doesn\'t exist ya dingus'});
+            }
+        }); 
     });
 });
 
 router.post('/start', upload.single('img'), function (req, res, next) {
-    fs.rename(req.file.path, './public/media/img/' + (req.file.originalname.replace(/\s+/g, '_')), function (err) {
-        req.getConnection(function (err, connection) {
-            utils.errorCheck(err, next);
+    res.locals.baseUrl = req.baseUrl;
+    res.locals.urlParts = req.baseUrl.split('/');
+    res.locals.currentBoard = res.locals.urlParts[1];
 
-            connection.query('INSERT INTO `student`.`image` (`ID`, `string`) VALUES (NULL, ?);', [req.file.originalname.replace(/\s+/g, '_')], function (err, result) {
+    if (req.body.message && req.body.title) {
+        fs.rename(req.file.path, './public/media/img/' + (req.file.originalname.replace(/\s+/g, '_')), function (err) {
+            req.getConnection(function (err, connection) {
                 utils.errorCheck(err, next);
 
-                res.locals.imageId = result.insertId; // store the ID of the image for later use as FK
-
-                connection.query('INSERT INTO `student`.`thread` (`ID`, `boardID`, `postID`, `title`) VALUES (NULL, (SELECT ID FROM `student`.`board` WHERE url = ?), NULL, ?);', [res.locals.currentBoard, req.body.title], function (err, result) {
+                connection.query('INSERT INTO `student`.`image` (`ID`, `string`) VALUES (NULL, ?);', [req.file.originalname.replace(/\s+/g, '_')], function (err, result) {
                     utils.errorCheck(err, next);
-                    res.locals.threadId = result.insertId;
 
-                    connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`, `timestamp`) VALUES (NULL, ?, ?, ?, ?, NULL)', [res.locals.threadId, req.body.name, req.body.message, res.locals.imageId], function (err, result) {
+                    res.locals.imageId = result.insertId; // store the ID of the image for later use as FK
+
+                    connection.query('INSERT INTO `student`.`thread` (`ID`, `boardID`, `postID`, `title`) VALUES (NULL, (SELECT ID FROM `student`.`board` WHERE url = ?), NULL, ?);', [res.locals.currentBoard, req.body.title], function (err, result) {
                         utils.errorCheck(err, next);
-                        res.locals.OpId = result.insertId;
+                        res.locals.threadId = result.insertId;
+                        console.log(res.locals.threadId, result);
 
-                        connection.query('UPDATE `student`.`thread` SET `postID` = ? WHERE `thread`.`id` = ?', [res.locals.OpId, res.locals.threadId], function (err, result) {
+                        connection.query('INSERT INTO `student`.`post` (`ID`, `threadID`, `name`, `message`, `imgID`, `timestamp`) VALUES (NULL, ?, ?, ?, ?, NULL)', [res.locals.threadId, req.body.name, req.body.message, res.locals.imageId], function (err, result) {
                             utils.errorCheck(err, next);
+                            res.locals.OpId = result.insertId;
 
-                            res.redirect(req.baseUrl);
+                            connection.query('UPDATE `student`.`thread` SET `postID` = ? WHERE `thread`.`id` = ?', [res.locals.OpId, res.locals.threadId], function (err, result) {
+                                utils.errorCheck(err, next);
+
+                                res.redirect(req.baseUrl);
+                            });
                         });
                     });
                 });
             });
         });
-
-        console.log("file recieved and renamed");
-    });
+    } else {
+        res.render('error', {title: '404 page not found', h1: 'fill in all the fields ya dingus'})
+    }
 });
 
 module.exports = router;

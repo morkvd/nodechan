@@ -4,6 +4,9 @@ html
   body
     main
 
+      section.back
+        a(href= '../'+currentBoard) &lt; back 
+
       section.createpost
         form(action= baseUrl + '/post', method='post', enctype='multipart/form-data' )
           h2 reply to this thread

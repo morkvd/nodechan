@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
                     return next(err);
                 }
                 console.log(result);
-                res.render('admin/index', {title: 'admin panel', h1: 'welcome to cmd-chan admin panel', boards: req.boards});
+                res.render('admin/index', {title: 'admin panel', h1: 'welcome to the admin panel', boards: req.boards});
             });
         });    
     } else {
@@ -38,7 +38,7 @@ router.post('/addBoard', function (req, res, next) {
                 }
                 console.log(req.body.url, req.body.name, req.body.description);
                 console.log(result);
-                res.redirect('../admin');
+                res.redirect('../');
             });
         });
     } else {
@@ -62,7 +62,7 @@ router.get('/delete/:board', function (req, res, next) {
                 }
                 console.log(result);
                 console.log('deleted board');
-                res.redirect('..');
+                res.redirect('../');
             });
         });
     } else {

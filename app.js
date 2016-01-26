@@ -34,7 +34,7 @@ app.use(myConnection(mysql, {
 
 // Use session
 app.use(session({
-    secret: "HoleInThisPlatinumShipOfFools_NomadicRule_ConceptNoRules_MobileShrineOfThisDestitute_WastelandMute",
+    secret: "My_stargate_in_a_vacuum_monitors_eye_view",
     resave: false,
     saveUninitialized: true
 }));

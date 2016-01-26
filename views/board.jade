@@ -2,8 +2,12 @@ doctype html
 html
   include ./includes/head.jade
   body
-    h1!= h1
     main
+      h1!= h1
+
+      section.back
+        a(href= '../') &lt; back 
+
       section.createthread
         form(action= baseUrl + '/start', method='post', enctype='multipart/form-data' )
           h2 new thread

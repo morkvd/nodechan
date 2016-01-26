@@ -30,6 +30,21 @@ h2 {
   margin: 0;
 }
 
+p {
+  margin: 0.3em 0;
+}
+
+.back {
+  padding-left: 1em;
+}
+.back a {
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    background-color: hsl(0, 0%, 11%);
+    border: 1px solid hsl(0, 0%, 43%);
+}
+
+
 .thread {
   border: 0.1em solid rgb(53, 53, 53);
   background-color: rgb(28, 28, 28);
@@ -66,7 +81,7 @@ h2 {
     }
     .thread .thumb {
       width: 30%;
-
+      margin-bottom: 0.8em;
       flex: 1 1 30%;
     }
     .thread .thumb img {
@@ -76,7 +91,7 @@ h2 {
     .thread .message {
       width: 70%;
       padding: 0 0 0 1em;
-
+      padding-bottom: 1em;
       flex: 1 1 70%;
     }
     .thread .message p:first-child {
@@ -106,7 +121,7 @@ h2 {
   }
   .post .message {
     width: 70%;
-    padding: 0 0 0 1em;
+    padding: 0 0 0.7em 1em;
     flex: 1 1 70%;
     color: #fff;
   }
@@ -151,4 +166,11 @@ nav.boards {
 }
 .del-link {
   float: right;
+}
+
+@media screen and (min-width: 50em) {
+  main {
+    width: 48em;
+    margin: 0px auto;
+  }
 }
