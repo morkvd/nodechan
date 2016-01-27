@@ -17,10 +17,10 @@ router.get('/', function (req, res, next) {
         utils.errorCheck(err, next);
 
         connection.query('SELECT * FROM board WHERE url = ?', [res.locals.currentBoard], function (err, result) {
+            console.log(result);
             res.locals.boardName = result[0].name;
             res.locals.boardDescription = result[0].description;
 
-            console.log(result);
             utils.errorCheck(err, next);
             if (!result.length == 0) {
                 connection.query('SELECT board.ID AS boardID, board.name AS boardName, board.description AS boardDescription, board.url AS boardUrl, post.ID AS postID, post.name AS postName, post.message AS postMessage, post.timestamp AS timestamp, thread.title AS threadTitle, image.string AS imageString FROM student.thread LEFT JOIN board ON thread.boardID = board.ID LEFT JOIN post ON thread.postID = post.ID LEFT JOIN image ON post.imgID = image.ID WHERE board.url = ?', [res.locals.currentBoard], function (err, result) {
@@ -40,7 +40,11 @@ router.post('/start', upload.single('img'), function (req, res, next) {
     res.locals.urlParts = req.baseUrl.split('/');
     res.locals.currentBoard = res.locals.urlParts[1];
 
-    if (req.body.message && req.body.title) {
+    if (req.body.message && req.body.title && req.file) {
+        console.log(req.file);
+        if (req.file.mimetype == 'image/png' || req.file.mimetype == 'image/jpg' || req.file.mimetype == 'image/gif' || req.file.mimetype == 'image/webm') {
+            console.log('woah');
+        }
         fs.rename(req.file.path, './public/media/img/' + (req.file.originalname.replace(/\s+/g, '_')), function (err) {
             req.getConnection(function (err, connection) {
                 utils.errorCheck(err, next);

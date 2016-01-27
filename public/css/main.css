@@ -100,7 +100,7 @@ p {
     }
     .thread .thumb.wide:after {
       content: '-';
-      padding-right: 1em;
+      padding-right: 0.4em;
     }
     .thread .thumb img {
       width: 95%;

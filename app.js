@@ -39,7 +39,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// Use the bodyParser
+// Use bodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
